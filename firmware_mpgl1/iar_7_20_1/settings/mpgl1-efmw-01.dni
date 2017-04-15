@@ -45,10 +45,6 @@ ActionState=1
 Enabled=_ 0
 [watch_formats]
 Fmt0={W}3:UserApp_u8AdcResultCount	3	0
-[Log file]
-LoggingEnabled=_ 0
-LogFile=_ ""
-Category=_ 0
 [TermIOLog]
 LoggingEnabled=_ 0
 LogFile=_ ""
@@ -60,6 +56,10 @@ Mode=1
 Graph=0
 Symbiont=0
 Exclusions=
+[Log file]
+LoggingEnabled=_ 0
+LogFile=_ ""
+Category=_ 0
 [Disassemble mode]
 mode=0
 [Breakpoints2]
