@@ -87,7 +87,15 @@ Promises:
 */
 void UserApp1Initialize(void)
 {
- 
+  /* Initialize all unused LEDs to off */
+  LedOff(CYAN);
+  LedOff(GREEN);
+  LedOff(YELLOW);
+  LedOff(ORANGE);
+  LedOff(BLUE);
+  LedOff(PURPLE);
+  LedPWM(WHITE,LED_PWM_5);
+
   /* If good initialization, set state to Idle */
   if( 1 )
   {
@@ -137,8 +145,30 @@ State Machine Function Definitions
 static void UserApp1SM_Idle(void)
 {
 
-} /* end UserApp1SM_Idle() */
+  BCD_code_display();
+  
+}
+ /* end UserApp1SM_Idle() */
     
+ u8 u8_count = 0;
+u32 u32_for_count = 1;
+
+void BCD_code_display(void)
+{
+  if(G_u32SystemTime1ms % 1000 == 0)
+  {   u8_count++;
+      u8 u8_LedNum = 0;
+    for(u32_for_count = 1;u32_for_count <= 8;u32_for_count = u32_for_count * 2)
+    { 
+      if(u8_count / u32_for_count % 2 == 1)
+      {
+        LedPWM(u8_LedNum,LED_PWM_5);
+      }
+      else LedOff(u8_LedNum);
+      u8_LedNum++;
+      }     
+    }
+}
 #if 0
 /*-------------------------------------------------------------------------------------------------------------------*/
 /* Handle an error */

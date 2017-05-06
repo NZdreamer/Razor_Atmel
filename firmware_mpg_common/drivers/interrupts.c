@@ -19,6 +19,8 @@ All Global variable names shall start with "G_"
 extern volatile u32 G_u32SystemTime1ms;                            /* From board-specific source file */
 extern volatile u32 G_u32SystemTime1s;                             /* From board-specific source file */
 
+u32 G_u32ButtonPortAClickedTime=0;
+    
 extern volatile u32 G_u32SystemFlags;                              /* From main.c       */
 
 extern volatile bool G_abButtonDebounceActive[TOTAL_BUTTONS];      /* From buttons.c    */
@@ -147,6 +149,7 @@ void SysTick_Handler(void)
   /* Update the 1ms system timer and clear sleep flag */
   G_u32SystemTime1ms++;
   G_u32SystemFlags &= ~_SYSTEM_SLEEPING;
+  
 
   /* Update the 1 second timer if required */
   if(--u16SecondCounter == 0)
@@ -189,6 +192,7 @@ void PIOA_IrqHandler(void)
   /* Check if any port A buttons interrupted */
   if(u32ButtonInterrupts)
   {
+
     /* Parse through all the buttons to find those that have interrupted */
     for(u8 i = 0; i < TOTAL_BUTTONS; i++)
     {
@@ -244,6 +248,7 @@ void PIOB_IrqHandler(void)
   /* Check if any port B buttons interrupted */
   if(u32ButtonInterrupts)
   {
+      G_u32ButtonPortAClickedTime++;
     /* Parse through all the buttons to find those that have interrupted */
     for(u8 i = 0; i < TOTAL_BUTTONS; i++)
     {
